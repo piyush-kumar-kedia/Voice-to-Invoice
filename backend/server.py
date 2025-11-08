@@ -1063,7 +1063,7 @@ async def create_payment_link(invoice_id: str):
         # Update invoice with payment link
         await db.invoices.update_one(
             {"id": invoice_id},
-            {"$set": {"payment_link": payment_link, "status": "pending"}}
+            {"$set": {"payment_link": payment_link}}
         )
         
         return {
