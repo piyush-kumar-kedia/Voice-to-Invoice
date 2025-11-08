@@ -599,19 +599,37 @@ async def whatsapp_webhook(
         
         # Handle voice messages
         if NumMedia > 0:
+            all_transcriptions = []
+            audio_count = 0
+            
+            # Collect all audio transcriptions
             for i in range(NumMedia):
                 media_url = form_data.get(f"MediaUrl{i}")
                 content_type = form_data.get(f"MediaContentType{i}", "")
                 
                 if content_type.startswith("audio/"):
+                    audio_count += 1
+                    try:
+                        # Transcribe audio
+                        transcription = await transcribe_audio(str(media_url))
+                        logger.info(f"Audio {i+1} transcription: {transcription}")
+                        all_transcriptions.append(transcription)
+                    except Exception as e:
+                        logger.error(f"Failed to transcribe audio {i+1}: {str(e)}")
+            
+            # If we have audio files, process them
+            if audio_count > 0:
+                if audio_count > 1:
+                    response.message(f"🎤 Processing {audio_count} voice messages...")
+                else:
                     response.message("🎤 Processing your voice message...")
-                    
-                    # Transcribe audio
-                    transcription = await transcribe_audio(str(media_url))
-                    logger.info(f"Transcription: {transcription}")
-                    
-                    # Extract invoice data
-                    invoice_data = await extract_invoice_data(transcription, user.id)
+                
+                # Combine all transcriptions
+                combined_transcription = " ".join(all_transcriptions)
+                logger.info(f"Combined transcription ({audio_count} audios): {combined_transcription}")
+                
+                # Extract invoice data from combined transcription
+                invoice_data = await extract_invoice_data(combined_transcription, user.id)
                     
                     # Check if prices are missing
                     missing_prices = invoice_data.get("missing_prices", [])
