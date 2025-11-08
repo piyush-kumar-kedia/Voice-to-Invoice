@@ -831,7 +831,7 @@ Extract numbers mentioned as prices. Be lenient with format."""
                         
                         await db.invoices.update_one(
                             {"id": invoice.id},
-                            {"$set": {"payment_link": payment_link, "status": "pending"}}
+                            {"$set": {"payment_link": payment_link}}
                         )
                         invoice.payment_link = payment_link
                         
