@@ -357,25 +357,33 @@ async def extract_invoice_data(transcription: str, user_id: str):
 
 IMPORTANT: Return a JSON object with:
 {{
-  "customer_name": "exact customer name if mentioned, else 'Walk-in Customer'",
+  "customer_name": "EXACT customer name if mentioned (including 'to <name>', 'for <name>'), otherwise 'Walk-in Customer'",
   "items": [
     {{"name": "item name (normalized/singular)", "quantity": number, "price": null}}
   ]
 }}
 
-CRITICAL RULES:
+CRITICAL RULES FOR CUSTOMER NAME:
+1. Look for patterns: "to <name>", "for <name>", "sold to <name>", "customer <name>"
+2. Extract the EXACT name mentioned in transcription (even if misspelled)
+3. Examples:
+   - "sold 20 rice to piyush" → customer_name: "piyush"
+   - "sold 20 rice and five almond to peyush" → customer_name: "peyush"
+   - "for Rajesh" → customer_name: "Rajesh"
+   - "sold 20 rice" → customer_name: "Walk-in Customer"
+
+CRITICAL RULES FOR ITEMS & PRICES:
 1. **ALWAYS set price to null** for items that might be in the catalog
 2. **ONLY include a price number** if the user explicitly mentions a price in the transcription
 3. Normalize to singular form (e.g., "rices" → "rice", "bags of rice" → "rice")
 4. Extract accurate quantities
-5. **Extract customer name if mentioned** - check against known customers list for exact match
 
 DO NOT guess prices. Set price to null if not explicitly mentioned.
 
 Examples:
 - "sold 2 rice to Rajesh Kumar" → {{"customer_name": "Rajesh Kumar", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}}
+- "sold 20 rice to piyush" → {{"customer_name": "piyush", "items": [{{"name": "rice", "quantity": 20, "price": null}}]}}
 - "sold 2 rice" → {{"customer_name": "Walk-in Customer", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}}
-- "sold 2 bags of rice" → {{"customer_name": "Walk-in Customer", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}}
 - "two rices for Amit" → {{"customer_name": "Amit", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}}
 - "sold 2 rice at 600 each" → {{"customer_name": "Walk-in Customer", "items": [{{"name": "rice", "quantity": 2, "price": 600}}]}}"""
         ).with_model("openai", "gpt-4o")
