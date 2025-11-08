@@ -945,6 +945,56 @@ async def delete_invoice(invoice_id: str):
         raise HTTPException(status_code=404, detail="Invoice not found")
     return {"success": True, "message": "Invoice deleted successfully"}
 
+# Update Invoice (for marking as paid, etc.)
+@api_router.put("/invoices/{invoice_id}")
+async def update_invoice(invoice_id: str, request: Request):
+    """Update invoice details (status, payment info, etc.)"""
+    try:
+        # Get update data from request body
+        update_data = await request.json()
+        
+        # Check if invoice exists
+        invoice_doc = await db.invoices.find_one({"id": invoice_id}, {"_id": 0})
+        if not invoice_doc:
+            raise HTTPException(status_code=404, detail="Invoice not found")
+        
+        # If marking as paid, calculate amounts
+        if update_data.get('status') == 'paid':
+            total = invoice_doc.get('total', 0)
+            update_data['amount_paid'] = total
+            update_data['amount_due'] = 0
+            update_data['status'] = 'paid'
+        
+        # Update in database
+        result = await db.invoices.update_one(
+            {"id": invoice_id},
+            {"$set": update_data}
+        )
+        
+        if result.modified_count == 0 and result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="Invoice not found")
+        
+        # Update customer's total_due if customer_id exists
+        if invoice_doc.get('customer_id') and 'amount_due' in update_data:
+            # Recalculate customer's total due from all invoices
+            customer_invoices = await db.invoices.find(
+                {"customer_id": invoice_doc['customer_id']},
+                {"_id": 0}
+            ).to_list(1000)
+            
+            total_customer_due = sum(inv.get('amount_due', 0) for inv in customer_invoices)
+            
+            await db.customers.update_one(
+                {"id": invoice_doc['customer_id']},
+                {"$set": {"total_due": total_customer_due}}
+            )
+        
+        return {"success": True, "message": "Invoice updated successfully"}
+    
+    except Exception as e:
+        logger.error(f"Error updating invoice: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to update invoice: {str(e)}")
+
 # ==================== NEW FEATURES ====================
 
 # PDF Invoice Download
