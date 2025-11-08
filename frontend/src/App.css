@@ -970,3 +970,171 @@ h1, h2, h3 {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==================== Customer Management ==================== */
+.customer-management {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.customer-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+
+.customer-form h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #00897b;
+  margin-bottom: 1.5rem;
+}
+
+.customers-table {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.customers-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customers-table thead {
+  background: linear-gradient(135deg, #00897b, #00695c);
+  color: white;
+}
+
+.customers-table thead th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+}
+
+.customers-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s;
+}
+
+.customers-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.customers-table tbody td {
+  padding: 1rem;
+  font-size: 0.9375rem;
+  color: #333;
+}
+
+.customer-name {
+  font-weight: 600;
+  color: #00897b;
+}
+
+/* ==================== Due Management ==================== */
+.due-management {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.due-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.due-stats-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.due-icon {
+  color: #00897b;
+  flex-shrink: 0;
+}
+
+.due-label {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.due-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #00897b;
+}
+
+.due-table {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.due-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.due-table thead {
+  background: linear-gradient(135deg, #00897b, #00695c);
+  color: white;
+}
+
+.due-table thead th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+}
+
+.due-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s;
+}
+
+.due-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.due-table tbody td {
+  padding: 1rem;
+  font-size: 0.9375rem;
+  color: #333;
+}
+
+/* Responsive Design for Tables */
+@media (max-width: 768px) {
+  .customers-table,
+  .due-table {
+    overflow-x: auto;
+  }
+  
+  .customers-table table,
+  .due-table table {
+    min-width: 800px;
+  }
+  
+  .customer-management,
+  .due-management {
+    padding: 1rem;
+  }
+
+}
