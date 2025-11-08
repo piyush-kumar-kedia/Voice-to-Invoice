@@ -173,17 +173,6 @@ const Dashboard = () => {
                     PDF
                   </button>
                   
-                  {invoice.status === 'unpaid' && (
-                    <button 
-                      className="action-btn btn-payment"
-                      onClick={() => createPaymentLink(invoice.id)}
-                      data-testid={`create-payment-${invoice.id}`}
-                    >
-                      <CreditCard size={16} />
-                      Create Payment
-                    </button>
-                  )}
-                  
                   {invoice.payment_link && (
                     <a 
                       href={invoice.payment_link}
