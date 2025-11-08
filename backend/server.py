@@ -329,6 +329,7 @@ async def extract_invoice_data(transcription: str, user_id: str):
         customer_info = ""
         if customer_names:
             customer_info = f"\n\nKnown customers: {', '.join(customer_names[:20])}"
+            logger.info(f"Passing customer list to GPT: {customer_names}")
         
         # Create a mapping for fuzzy matching (handle plurals and variations)
         def find_catalog_price(item_name: str):
