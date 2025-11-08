@@ -630,79 +630,79 @@ async def whatsapp_webhook(
                 
                 # Extract invoice data from combined transcription
                 invoice_data = await extract_invoice_data(combined_transcription, user.id)
-                    
-                    # Check if prices are missing
-                    missing_prices = invoice_data.get("missing_prices", [])
-                    if missing_prices:
-                        # Store pending invoice for price completion
-                        pending = PendingInvoice(
-                            user_id=user.id,
-                            customer_name=invoice_data.get("customer_name", "Walk-in Customer"),
-                            items=invoice_data.get("items", []),
-                            transcription=transcription
-                        )
-                        doc = pending.model_dump()
-                        doc['created_at'] = doc['created_at'].isoformat()
-                        await db.pending_invoices.insert_one(doc)
-                        
-                        # Ask for prices in a simple text message
-                        missing_items_str = ", ".join(missing_prices)
-                        response.message(
-                            f"Almost done! 📝\n\n"
-                            f"What's the price for: *{missing_items_str}*?\n\n"
-                            f"Just reply with the price(s).\n"
-                            f"Example: \"100\" or \"{missing_prices[0]} is 100 rupees\""
-                        )
-                        return FastAPIResponse(content=str(response), media_type="application/xml")
-                    
-                    # Check if any item has null price
-                    has_null_price = any(item.get("price") is None for item in invoice_data.get("items", []))
-                    if has_null_price:
-                        null_items = [item['name'] for item in invoice_data.get("items", []) if item.get("price") is None]
-                        response.message(
-                            f"⚠️ Price not available for: {', '.join(null_items)}\n\n"
-                            f"Please add these products to your catalog first or "
-                            f"mention the price in your voice message."
-                        )
-                        return FastAPIResponse(content=str(response), media_type="application/xml")
-                    
-                    # Calculate totals
-                    items = []
-                    subtotal = 0
-                    for item_data in invoice_data.get("items", []):
-                        total = item_data["quantity"] * item_data["price"]
-                        items.append(InvoiceItem(
-                            name=item_data["name"],
-                            quantity=item_data["quantity"],
-                            price=item_data["price"],
-                            total=total
-                        ))
-                        subtotal += total
-                    
-                    tax_rate = 0.18  # 18% GST
-                    tax = subtotal * tax_rate
-                    total = subtotal + tax
-                    
-                    # Generate invoice number
-                    invoice_count = await db.invoices.count_documents({"user_id": user.id})
-                    invoice_number = f"INV-{user.id[:8]}-{invoice_count + 1:04d}"
-                    
-                    # Get customer data if found
-                    customer_id = invoice_data.get("customer_id")
-                    customer_email = invoice_data.get("customer_email", "")
-                    customer_phone = invoice_data.get("customer_phone", "")
-                    customer_address = invoice_data.get("customer_address", "")
-                    
-                    # Create invoice with customer data
-                    invoice = Invoice(
+                
+                # Check if prices are missing
+                missing_prices = invoice_data.get("missing_prices", [])
+                if missing_prices:
+                    # Store pending invoice for price completion
+                    pending = PendingInvoice(
                         user_id=user.id,
-                        customer_id=customer_id,
-                        invoice_number=invoice_number,
                         customer_name=invoice_data.get("customer_name", "Walk-in Customer"),
-                        customer_email=customer_email,
-                        customer_phone=customer_phone,
-                        customer_address=customer_address,
-                        items=items,
+                        items=invoice_data.get("items", []),
+                        transcription=combined_transcription
+                    )
+                    doc = pending.model_dump()
+                    doc['created_at'] = doc['created_at'].isoformat()
+                    await db.pending_invoices.insert_one(doc)
+                    
+                    # Ask for prices in a simple text message
+                    missing_items_str = ", ".join(missing_prices)
+                    response.message(
+                        f"Almost done! 📝\n\n"
+                        f"What's the price for: *{missing_items_str}*?\n\n"
+                        f"Just reply with the price(s).\n"
+                        f"Example: \"100\" or \"{missing_prices[0]} is 100 rupees\""
+                    )
+                    return FastAPIResponse(content=str(response), media_type="application/xml")
+                
+                # Check if any item has null price
+                has_null_price = any(item.get("price") is None for item in invoice_data.get("items", []))
+                if has_null_price:
+                    null_items = [item['name'] for item in invoice_data.get("items", []) if item.get("price") is None]
+                    response.message(
+                        f"⚠️ Price not available for: {', '.join(null_items)}\n\n"
+                        f"Please add these products to your catalog first or "
+                        f"mention the price in your voice message."
+                    )
+                    return FastAPIResponse(content=str(response), media_type="application/xml")
+                
+                # Calculate totals
+                items = []
+                subtotal = 0
+                for item_data in invoice_data.get("items", []):
+                    total = item_data["quantity"] * item_data["price"]
+                    items.append(InvoiceItem(
+                        name=item_data["name"],
+                        quantity=item_data["quantity"],
+                        price=item_data["price"],
+                        total=total
+                    ))
+                    subtotal += total
+                
+                tax_rate = 0.18  # 18% GST
+                tax = subtotal * tax_rate
+                total = subtotal + tax
+                
+                # Generate invoice number
+                invoice_count = await db.invoices.count_documents({"user_id": user.id})
+                invoice_number = f"INV-{user.id[:8]}-{invoice_count + 1:04d}"
+                
+                # Get customer data if found
+                customer_id = invoice_data.get("customer_id")
+                customer_email = invoice_data.get("customer_email", "")
+                customer_phone = invoice_data.get("customer_phone", "")
+                customer_address = invoice_data.get("customer_address", "")
+                
+                # Create invoice with customer data
+                invoice = Invoice(
+                    user_id=user.id,
+                    customer_id=customer_id,
+                    invoice_number=invoice_number,
+                    customer_name=invoice_data.get("customer_name", "Walk-in Customer"),
+                    customer_email=customer_email,
+                    customer_phone=customer_phone,
+                    customer_address=customer_address,
+                    items=items,
                         subtotal=subtotal,
                         tax_rate=tax_rate,
                         tax=tax,
