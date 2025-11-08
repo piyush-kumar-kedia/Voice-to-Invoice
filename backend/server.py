@@ -713,69 +713,69 @@ async def whatsapp_webhook(
                     transcription=combined_transcription,
                     language=user.language
                 )
+                
+                # Save to database first
+                doc = invoice.model_dump()
+                doc['date'] = doc['date'].isoformat()
+                doc['created_at'] = doc['created_at'].isoformat()
+                await db.invoices.insert_one(doc)
+                
+                # Create payment link
+                try:
+                    backend_url = os.environ.get('REACT_APP_BACKEND_URL', 'https://easy-billing-20.preview.emergentagent.com')
+                    if RAZORPAY_TEST_MODE:
+                        payment_link = f"{backend_url}/api/test-payment/{invoice.id}"
+                    else:
+                        payment_data = {
+                            "amount": int(invoice.total * 100),
+                            "currency": "INR",
+                            "description": f"Invoice {invoice.invoice_number}",
+                            "customer": {
+                                "name": invoice.customer_name,
+                                "contact": invoice.customer_phone,
+                            },
+                            "notify": {"sms": False, "email": False}
+                        }
+                        payment_link_obj = razorpay_client.payment_link.create(payment_data)
+                        payment_link = payment_link_obj['short_url']
                     
-                    # Save to database first
-                    doc = invoice.model_dump()
-                    doc['date'] = doc['date'].isoformat()
-                    doc['created_at'] = doc['created_at'].isoformat()
-                    await db.invoices.insert_one(doc)
-                    
-                    # Create payment link
+                    # Update invoice with payment link
+                    await db.invoices.update_one(
+                        {"id": invoice.id},
+                        {"$set": {"payment_link": payment_link, "payment_status": "pending"}}
+                    )
+                    invoice.payment_link = payment_link
+                except Exception as e:
+                    logger.error(f"Payment link creation failed: {str(e)}")
+                    payment_link = ""
+                
+                # Send email if customer has email
+                if customer_email:
                     try:
-                        backend_url = os.environ.get('REACT_APP_BACKEND_URL', 'https://easy-billing-20.preview.emergentagent.com')
-                        if RAZORPAY_TEST_MODE:
-                            payment_link = f"{backend_url}/api/test-payment/{invoice.id}"
-                        else:
-                            payment_data = {
-                                "amount": int(invoice.total * 100),
-                                "currency": "INR",
-                                "description": f"Invoice {invoice.invoice_number}",
-                                "customer": {
-                                    "name": invoice.customer_name,
-                                    "contact": invoice.customer_phone,
-                                },
-                                "notify": {"sms": False, "email": False}
-                            }
-                            payment_link_obj = razorpay_client.payment_link.create(payment_data)
-                            payment_link = payment_link_obj['short_url']
+                        # Generate PDF
+                        invoice_doc = invoice.model_dump()
+                        invoice_doc['date'] = invoice.date.isoformat()
+                        invoice_doc['created_at'] = invoice.created_at.isoformat()
+                        pdf_buffer = generate_invoice_pdf(invoice_doc)
+                        pdf_content = pdf_buffer.read()
                         
-                        # Update invoice with payment link
-                        await db.invoices.update_one(
-                            {"id": invoice.id},
-                            {"$set": {"payment_link": payment_link, "payment_status": "pending"}}
+                        # Send email
+                        email_sent = send_invoice_email(
+                            to_email=customer_email,
+                            customer_name=invoice.customer_name,
+                            invoice_number=invoice.invoice_number,
+                            total_amount=invoice.total,
+                            pdf_content=pdf_content,
+                            payment_link=invoice.payment_link,
+                            language=user.language
                         )
-                        invoice.payment_link = payment_link
-                    except Exception as e:
-                        logger.error(f"Payment link creation failed: {str(e)}")
-                        payment_link = ""
-                    
-                    # Send email if customer has email
-                    if customer_email:
-                        try:
-                            # Generate PDF
-                            invoice_doc = invoice.model_dump()
-                            invoice_doc['date'] = invoice.date.isoformat()
-                            invoice_doc['created_at'] = invoice.created_at.isoformat()
-                            pdf_buffer = generate_invoice_pdf(invoice_doc)
-                            pdf_content = pdf_buffer.read()
-                            
-                            # Send email
-                            email_sent = send_invoice_email(
-                                to_email=customer_email,
-                                customer_name=invoice.customer_name,
-                                invoice_number=invoice.invoice_number,
-                                total_amount=invoice.total,
-                                pdf_content=pdf_content,
-                                payment_link=invoice.payment_link,
-                                language=user.language
+                        
+                        if email_sent:
+                            await db.invoices.update_one(
+                                {"id": invoice.id},
+                                {"$set": {"email_sent": True}}
                             )
-                            
-                            if email_sent:
-                                await db.invoices.update_one(
-                                    {"id": invoice.id},
-                                    {"$set": {"email_sent": True}}
-                                )
-                                logger.info(f"✓ Invoice emailed to {customer_email}")
+                            logger.info(f"✓ Invoice emailed to {customer_email}")
                             
                             # Update customer stats
                             if customer_id:
