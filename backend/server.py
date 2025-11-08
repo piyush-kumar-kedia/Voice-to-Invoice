@@ -137,6 +137,7 @@ class Invoice(BaseModel):
     customer_name: Optional[str] = "Walk-in Customer"
     customer_phone: Optional[str] = ""
     customer_email: Optional[str] = ""
+    customer_address: Optional[str] = ""
     items: List[InvoiceItem]
     subtotal: float
     tax_rate: float = 0.0
