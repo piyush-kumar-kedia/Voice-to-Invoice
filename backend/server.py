@@ -421,7 +421,8 @@ Examples:
                 invoice_data['customer_id'] = customer_data['id']
                 invoice_data['customer_email'] = customer_data.get('email', '')
                 invoice_data['customer_phone'] = customer_data.get('phone', '')
-                logger.info(f"✓ Customer found in database: {customer_data['name']}, email: {customer_data.get('email')}")
+                invoice_data['customer_address'] = customer_data.get('address', '')
+                logger.info(f"✓ Customer found in database: {customer_data['name']}, email: {customer_data.get('email')}, phone: {customer_data.get('phone')}")
             else:
                 logger.info(f"✗ Customer '{customer_name}' not found in database")
         
