@@ -174,8 +174,10 @@ class InvoiceCreate(BaseModel):
 # ==================== Helper Functions ====================
 
 async def find_customer_by_name(user_id: str, customer_name: str):
-    """Find customer in database by name (fuzzy match)"""
+    """Find customer by name with fuzzy matching for typos"""
     try:
+        from difflib import SequenceMatcher
+        
         # Try exact match first
         customer = await db.customers.find_one(
             {"user_id": user_id, "name": {"$regex": f"^{customer_name}$", "$options": "i"}},
@@ -196,9 +198,9 @@ async def find_customer_by_name(user_id: str, customer_name: str):
             logger.info(f"Found partial customer match: {customer['name']}")
             return customer
         
-        # Check default customers
+        # Check default customers with exact match
         customer = await db.customers.find_one(
-            {"user_id": "default-user", "name": {"$regex": customer_name, "$options": "i"}},
+            {"user_id": "default-user", "name": {"$regex": f"^{customer_name}$", "$options": "i"}},
             {"_id": 0}
         )
         
@@ -206,6 +208,26 @@ async def find_customer_by_name(user_id: str, customer_name: str):
             logger.info(f"Found customer in shared database: {customer['name']}")
             return customer
         
+        # Fuzzy matching - get all customers and find best match
+        all_customers = await db.customers.find(
+            {"$or": [{"user_id": user_id}, {"user_id": "default-user"}]},
+            {"_id": 0}
+        ).to_list(100)
+        
+        best_match = None
+        best_ratio = 0.0
+        
+        for cust in all_customers:
+            ratio = SequenceMatcher(None, customer_name.lower(), cust['name'].lower()).ratio()
+            if ratio > best_ratio and ratio >= 0.7:  # 70% similarity threshold
+                best_ratio = ratio
+                best_match = cust
+        
+        if best_match:
+            logger.info(f"Found fuzzy customer match: '{customer_name}' → '{best_match['name']}' (similarity: {best_ratio:.2f})")
+            return best_match
+        
+        logger.info(f"No customer match found for: {customer_name}")
         return None
     except Exception as e:
         logger.error(f"Error finding customer: {str(e)}")
