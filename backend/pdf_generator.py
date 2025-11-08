@@ -101,8 +101,22 @@ def generate_invoice_pdf(invoice_data):
         ['Invoice Number:', invoice_data.get('invoice_number', 'N/A')],
         ['Date:', datetime.fromisoformat(invoice_data.get('date')).strftime('%d %B %Y') if isinstance(invoice_data.get('date'), str) else invoice_data.get('date').strftime('%d %B %Y')],
         ['Customer:', invoice_data.get('customer_name', 'Walk-in Customer')],
-        ['Status:', invoice_data.get('status', 'Unpaid').upper()]
     ]
+    
+    # Add customer phone if available
+    if invoice_data.get('customer_phone'):
+        invoice_info.append(['Phone:', invoice_data.get('customer_phone')])
+    
+    # Add customer email if available
+    if invoice_data.get('customer_email'):
+        invoice_info.append(['Email:', invoice_data.get('customer_email')])
+    
+    # Add customer address if available
+    if invoice_data.get('customer_address'):
+        invoice_info.append(['Address:', invoice_data.get('customer_address')])
+    
+    # Add status
+    invoice_info.append(['Status:', invoice_data.get('status', 'Unpaid').upper()])
     
     info_table = Table(invoice_info, colWidths=[2*inch, 4*inch])
     info_table.setStyle(TableStyle([
