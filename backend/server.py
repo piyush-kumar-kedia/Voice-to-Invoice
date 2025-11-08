@@ -776,26 +776,26 @@ async def whatsapp_webhook(
                                 {"$set": {"email_sent": True}}
                             )
                             logger.info(f"✓ Invoice emailed to {customer_email}")
-                            
-                            # Update customer stats
-                            if customer_id:
-                                await db.customers.update_one(
-                                    {"id": customer_id},
-                                    {
-                                        "$inc": {"total_purchases": invoice.total, "total_due": invoice.amount_due},
-                                        "$set": {"last_purchase": datetime.now(timezone.utc).isoformat()}
-                                    }
-                                )
-                        except Exception as e:
-                            logger.error(f"Email sending failed: {str(e)}")
-                    
-                    # Generate and send invoice with payment link
-                    invoice_text = await generate_invoice_text(invoice, user.language)
-                    await send_whatsapp_message(From, invoice_text)
-                    
-                    return {"status": "success", "message": "Invoice sent"}
-                else:
-                    response.message("📎 File received, but I only process voice messages.")
+                        
+                        # Update customer stats
+                        if customer_id:
+                            await db.customers.update_one(
+                                {"id": customer_id},
+                                {
+                                    "$inc": {"total_purchases": invoice.total, "total_due": invoice.amount_due},
+                                    "$set": {"last_purchase": datetime.now(timezone.utc).isoformat()}
+                                }
+                            )
+                    except Exception as e:
+                        logger.error(f"Email sending failed: {str(e)}")
+                
+                # Generate and send invoice with payment link
+                invoice_text = await generate_invoice_text(invoice, user.language)
+                await send_whatsapp_message(From, invoice_text)
+                
+                return {"status": "success", "message": "Invoice sent"}
+            else:
+                response.message("📎 File received, but I only process voice messages.")
         else:
             # Handle text messages
             body_lower = Body.lower()
