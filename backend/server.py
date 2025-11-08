@@ -703,16 +703,16 @@ async def whatsapp_webhook(
                     customer_phone=customer_phone,
                     customer_address=customer_address,
                     items=items,
-                        subtotal=subtotal,
-                        tax_rate=tax_rate,
-                        tax=tax,
-                        total=total,
-                        amount_paid=0.0,
-                        amount_due=total,
-                        status="unpaid",
-                        transcription=transcription,
-                        language=user.language
-                    )
+                    subtotal=subtotal,
+                    tax_rate=tax_rate,
+                    tax=tax,
+                    total=total,
+                    amount_paid=0.0,
+                    amount_due=total,
+                    status="unpaid",
+                    transcription=combined_transcription,
+                    language=user.language
+                )
                     
                     # Save to database first
                     doc = invoice.model_dump()
