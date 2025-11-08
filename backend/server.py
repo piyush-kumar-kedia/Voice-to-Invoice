@@ -447,9 +447,20 @@ async def generate_invoice_text(invoice: Invoice, language: str = 'en') -> str:
         f"{t('invoice_number')}: {invoice.invoice_number}",
         f"{t('date')}: {invoice.date.strftime('%Y-%m-%d %H:%M')}",
         f"{t('customer')}: {invoice.customer_name}",
+    ]
+    
+    # Add customer phone if available
+    if invoice.customer_phone:
+        lines.append(f"📱 Phone: {invoice.customer_phone}")
+    
+    # Add customer email if available
+    if invoice.customer_email:
+        lines.append(f"📧 Email: {invoice.customer_email}")
+    
+    lines.extend([
         "",
         t('items') + ":"
-    ]
+    ])
     
     for item in invoice.items:
         lines.append(f"\n• {item.name}")
