@@ -641,6 +641,7 @@ async def whatsapp_webhook(
                     customer_id = invoice_data.get("customer_id")
                     customer_email = invoice_data.get("customer_email", "")
                     customer_phone = invoice_data.get("customer_phone", "")
+                    customer_address = invoice_data.get("customer_address", "")
                     
                     # Create invoice with customer data
                     invoice = Invoice(
@@ -650,6 +651,7 @@ async def whatsapp_webhook(
                         customer_name=invoice_data.get("customer_name", "Walk-in Customer"),
                         customer_email=customer_email,
                         customer_phone=customer_phone,
+                        customer_address=customer_address,
                         items=items,
                         subtotal=subtotal,
                         tax_rate=tax_rate,
