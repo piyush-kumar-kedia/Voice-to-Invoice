@@ -1443,12 +1443,18 @@ h1, h2, h3 {
   background: #f5f7fa;
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .help-grid {
   display: flex;
   justify-content: center;
+  align-items: center;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -1466,6 +1472,7 @@ h1, h2, h3 {
   min-height: 350px;
   width: 100%;
   max-width: 500px;
+  margin: 0 auto;
 }
 
 .help-feature-card:hover {
@@ -1492,6 +1499,7 @@ h1, h2, h3 {
   text-align: center;
   color: #00897b;
   transition: color 0.3s ease;
+  width: 100%;
 }
 
 .help-feature-card:hover h3 {
@@ -1505,9 +1513,11 @@ h1, h2, h3 {
   background: rgba(0, 137, 123, 0.1);
   padding: 1rem 2rem;
   border-radius: 12px;
-  margin: 1.5rem 0;
+  margin: 1.5rem auto;
   border: 2px solid rgba(0, 137, 123, 0.2);
   transition: all 0.3s ease;
+  text-align: center;
+  width: fit-content;
 }
 
 .help-feature-card:hover .help-number {
@@ -1522,6 +1532,7 @@ h1, h2, h3 {
   line-height: 1.7;
   margin: 0.25rem 0;
   text-align: center;
+  width: 100%;
 }
 
 /* Help Banner on Dashboard */
