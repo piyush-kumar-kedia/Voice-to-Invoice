@@ -31,8 +31,8 @@ const Home = () => {
       <div className="how-it-works">
         <h2 className="section-title">
           कैसे काम करता है?
-          <span className="section-title-en">How It Works</span>
         </h2>
+        <p className="section-title-en">How It Works</p>
         
         <div className="steps-grid">
           <div className="step-card">
