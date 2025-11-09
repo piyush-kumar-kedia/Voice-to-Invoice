@@ -86,13 +86,22 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Help Banner */}
+      <div className="help-banner">
+        <Info size={20} />
+        <div>
+          <strong>कैसे बिल बनाएं? / How to create invoice?</strong>
+          <p>WhatsApp पर आवाज भेजें: "राम को 2 चावल बेचा" या "sold 2 rice to ram" → +1 415 523 8886</p>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="stat-card" data-testid="total-invoices-card">
           <div className="stat-icon">
             <Receipt size={24} />
           </div>
           <div>
-            <p className="stat-label">Total Invoices</p>
+            <p className="stat-label">कुल बिल / Total Invoices</p>
             <p className="stat-value" data-testid="total-invoices-value">{stats.total}</p>
           </div>
         </div>
@@ -102,24 +111,24 @@ const Dashboard = () => {
             <FileAudio size={24} />
           </div>
           <div>
-            <p className="stat-label">This Month</p>
+            <p className="stat-label">इस महीने / This Month</p>
             <p className="stat-value" data-testid="monthly-invoices-value">{stats.thisMonth}</p>
           </div>
         </div>
 
         <div className="stat-card" data-testid="revenue-card">
           <div className="stat-icon">
-            <Package size={24} />
+            <DollarSign size={24} />
           </div>
           <div>
-            <p className="stat-label">Total Revenue</p>
+            <p className="stat-label">कुल आय / Total Revenue</p>
             <p className="stat-value" data-testid="revenue-value">₹{stats.revenue.toFixed(2)}</p>
           </div>
         </div>
       </div>
 
       <div className="invoice-section">
-        <h2 className="section-title">Recent Invoices</h2>
+        <h2 className="section-title">हाल के बिल / Recent Invoices</h2>
         {loading ? (
           <div className="text-center py-12">
             <div className="loading-spinner"></div>
