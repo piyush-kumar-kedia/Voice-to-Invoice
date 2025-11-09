@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FileAudio, Receipt, Package, Menu, X, Download, CreditCard, Plus, Edit2, Trash2, Search, AlertCircle, Users, DollarSign } from "lucide-react";
+import { FileAudio, Receipt, Package, Menu, X, Download, CreditCard, Plus, Edit2, Trash2, Search, AlertCircle, Users, DollarSign, Home as HomeIcon, ChevronRight, Info } from "lucide-react";
+import Home from "./Home";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
