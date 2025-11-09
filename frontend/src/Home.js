@@ -128,10 +128,9 @@ const Home = () => {
           <h3>मदद चाहिए?</h3>
           <p className="help-text">
             WhatsApp पर आवाज भेजने के लिए:
-            <br />
-            <strong>+1 415 523 8886</strong>
-            <br />
-            <br />
+          </p>
+          <p className="help-number">+1 415 523 8886</p>
+          <p className="help-instructions">
             पहले "join" लिखकर भेजें
             <br />
             फिर आवाज भेजें
