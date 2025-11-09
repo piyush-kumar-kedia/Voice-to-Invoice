@@ -1,11 +1,17 @@
 from fastapi import FastAPI, APIRouter, Request, Form, HTTPException, UploadFile, File
 from fastapi.responses import StreamingResponse, Response as FastAPIResponse, HTMLResponse
 from dotenv import load_dotenv
+from pathlib import Path
+import os
+
+# Load environment variables FIRST before any other imports
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
+
+# Now import other modules that may need environment variables
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
-import os
 import logging
-from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
 import uuid
@@ -20,9 +26,6 @@ import razorpay
 from pdf_generator import generate_invoice_pdf
 from translations import translate, get_whatsapp_messages
 from email_service import send_invoice_email
-
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
