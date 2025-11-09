@@ -1235,6 +1235,10 @@ h1, h2, h3 {
   background: white;
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .section-title {
@@ -1245,6 +1249,7 @@ h1, h2, h3 {
   color: #00897b;
   line-height: 1.2;
   display: block;
+  width: 100%;
 }
 
 .section-title-en {
@@ -1254,6 +1259,7 @@ h1, h2, h3 {
   color: #666;
   margin: 0.5rem auto 3rem;
   text-align: center;
+  width: 100%;
 }
 
 .steps-grid-full {
@@ -1261,8 +1267,10 @@ h1, h2, h3 {
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   justify-items: center;
+  align-items: stretch;
 }
 
 .step-feature-card {
@@ -1334,17 +1342,19 @@ h1, h2, h3 {
   line-height: 1.7;
   margin: 0.25rem 0;
   text-align: center;
+  width: 100%;
 }
 
 .example-box {
   background: rgba(0, 137, 123, 0.1);
   padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  margin: 0.5rem 0;
+  margin: 0.5rem auto;
   font-weight: 600;
   color: #00695c;
   border: 2px solid rgba(0, 137, 123, 0.2);
   transition: all 0.3s ease;
+  max-width: 90%;
 }
 
 .step-feature-card:hover .example-box {
@@ -1357,6 +1367,7 @@ h1, h2, h3 {
   font-size: 0.95rem;
   margin: 0.5rem 0;
   opacity: 0.8;
+  text-align: center;
 }
 
 /* Features Section */
