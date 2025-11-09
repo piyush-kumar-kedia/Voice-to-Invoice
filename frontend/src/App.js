@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [invoices, setInvoices] = useState([]);
   const [stats, setStats] = useState({ total: 0, thisMonth: 0, revenue: 0 });
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchInvoices();
