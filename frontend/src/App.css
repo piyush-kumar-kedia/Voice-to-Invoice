@@ -1219,14 +1219,16 @@ h1, h2, h3 {
   padding: 4rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #00897b;
+  line-height: 1.2;
 }
 
 .section-title-en {
@@ -1235,6 +1237,7 @@ h1, h2, h3 {
   font-weight: 400;
   color: #666;
   margin-top: 0.5rem;
+  text-align: center;
 }
 
 .steps-grid {
