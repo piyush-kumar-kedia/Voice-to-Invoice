@@ -1419,31 +1419,36 @@ h1, h2, h3 {
 
 /* Help Section */
 .help-section {
-  padding: 3rem 2rem;
-  background: #f5f7fa;
-  max-width: 800px;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8eaf6 100%);
+  max-width: 100%;
   margin: 0 auto;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .help-card {
   background: white;
-  padding: 3rem 2rem;
-  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
   text-align: center;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .help-card svg {
   color: #00897b;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .help-card h3 {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
   color: #00897b;
   margin-bottom: 1.5rem;
@@ -1452,19 +1457,32 @@ h1, h2, h3 {
 }
 
 .help-text {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #555;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.help-number {
+  color: #00897b;
+  font-size: 2rem;
+  display: block;
+  margin: 1.5rem 0;
+  text-align: center;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f0f9f8, #e0f2f1);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  border: 2px solid #00897b;
+}
+
+.help-instructions {
+  font-size: 1.1rem;
   line-height: 1.9;
   color: #666;
   text-align: center;
-  max-width: 600px;
-}
-
-.help-text strong {
-  color: #00897b;
-  font-size: 1.75rem;
-  display: block;
-  margin: 1rem 0;
-  text-align: center;
+  margin-top: 1.5rem;
 }
 
 /* Help Banner on Dashboard */
