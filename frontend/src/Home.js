@@ -26,42 +26,40 @@ const Home = () => {
           </Link>
         </div>
       </div>
+ {/* How It Works Section */}
+  <div className="how-it-works">
+    <div className="section-header">
+      <h2 className="section-title">कैसे काम करता है?</h2>
+      <h2 className="section-title">How It Works</h2>
+    </div>
 
-      {/* How It Works Section */}
-      <div className="how-it-works">
-        <h2 className="section-title">कैसे काम करता है?</h2>
-        <p className="section-title-en">How It Works</p>
-        
-        <div className="steps-grid-full">
-          <div className="step-feature-card">
-            <div className="step-number-badge">1</div>
-            <Phone size={48} />
-            <h3>आवाज भेजें</h3>
-            <p>WhatsApp पर आवाज में बोलें:</p>
-            <div className="example-box">"राम को 2 चावल बेचा"</div>
-            <p className="or-text">या</p>
-            <div className="example-box">"sold 2 rice to ram"</div>
-          </div>
-
-          <div className="step-feature-card">
-            <div className="step-number-badge">2</div>
-            <Receipt size={48} />
-            <h3>बिल बनेगा</h3>
-            <p>अपने आप बिल बन जाएगा</p>
-            <p>ग्राहक का नाम, सामान, दाम</p>
-            <p>सब लिख जाएगा</p>
-          </div>
-
-          <div className="step-feature-card">
-            <div className="step-number-badge">3</div>
-            <Mail size={48} />
-            <h3>ईमेल मिलेगा</h3>
-            <p>ग्राहक को बिल की PDF</p>
-            <p>ईमेल से भेज दी जाएगी</p>
-            <p>पेमेंट लिंक भी रहेगा</p>
-          </div>
-        </div>
+   <div className="features-grid" style={{ marginLeft: "10px", marginRight: "10px" }}>
+      <div className="feature-card">
+        <Phone size={48} />
+        <h3>आवाज भेजें</h3>
+        <p>WhatsApp पर आवाज में बोलें:</p>
+        <div className="example-box">"राम को 2 चावल बेचा"</div>
+        <p className="or-text">या</p>
+        <div className="example-box">"sold 2 rice to ram"</div>
       </div>
+
+      <div className="feature-card">
+        <Receipt size={48} />
+        <h3>बिल बनेगा</h3>
+        <p>अपने आप बिल बन जाएगा</p>
+        <p>ग्राहक का नाम, सामान, दाम</p>
+        <p>सब लिख जाएगा</p>
+      </div>
+
+      <div className="feature-card">
+        <Mail size={48} />
+        <h3>ईमेल मिलेगा</h3>
+        <p>ग्राहक को बिल की PDF</p>
+        <p>ईमेल से भेज दी जाएगी</p>
+        <p>पेमेंट लिंक भी रहेगा</p>
+      </div>
+    </div>
+  </div>
 
       {/* Features Section */}
       <div className="features-section">
@@ -101,20 +99,22 @@ const Home = () => {
       </div>
 
       {/* Help Section */}
-      <div className="help-section-full">
-        <h2 className="section-title">मदद चाहिए?</h2>
-        <p className="section-title-en">Need Help?</p>
-        
-        <div className="help-grid">
-          <div className="help-feature-card">
-            <HelpCircle size={48} />
-            <h3>WhatsApp नंबर</h3>
-            <div className="help-number">+1 415 523 8886</div>
-            <p>पहले "join" लिखकर भेजें</p>
-            <p>फिर आवाज भेजें</p>
-          </div>
-        </div>
+    <div className="help-section-full">
+    <div className="section-header">
+      <h2 className="section-title">मदद चाहिए?</h2>
+      <p className="section-title-en">Need Help?</p>
+    </div>
+
+    <div className="features-grid help-grid-centered">
+      <div className="feature-card help-card">
+        <HelpCircle size={42} />
+        <h3>WhatsApp नंबर</h3>
+        <div className="help-number">+1 415 523 8886</div>
+        <p>पहले "join" लिखकर भेजें</p>
+        <p>फिर आवाज भेजें</p>
       </div>
+    </div>
+  </div>
     </div>
   );
 };
