@@ -945,21 +945,21 @@ function App() {
             <div className="dashboard-container">
               <div className="dashboard-header">
                 <Link to="/" className="back-link" data-testid="back-to-home">
-                  ← Back to Home
+                  ← मुख्य पृष्ठ / Home
                 </Link>
-                <h1 className="dashboard-title">Dashboard</h1>
+                <h1 className="dashboard-title">डैशबोर्ड / Dashboard</h1>
                 <div className="dashboard-nav">
                   <Link to="/due" className="nav-link-secondary" data-testid="due-link">
                     <AlertCircle size={18} />
-                    Due Payments
+                    बकाया / Due
                   </Link>
                   <Link to="/customers" className="nav-link-secondary" data-testid="customers-link">
                     <Users size={18} />
-                    Customers
+                    ग्राहक / Customers
                   </Link>
                   <Link to="/products" className="nav-link-primary" data-testid="products-link">
                     <Package size={18} />
-                    Products
+                    सामान / Products
                   </Link>
                 </div>
               </div>
@@ -970,9 +970,9 @@ function App() {
             <div className="dashboard-container">
               <div className="dashboard-header">
                 <Link to="/dashboard" className="back-link" data-testid="back-to-dashboard">
-                  ← Back to Dashboard
+                  ← डैशबोर्ड / Dashboard
                 </Link>
-                <h1 className="dashboard-title">Due Payments</h1>
+                <h1 className="dashboard-title">बकाया भुगतान / Due Payments</h1>
               </div>
               <DueManagement />
             </div>
@@ -981,9 +981,9 @@ function App() {
             <div className="dashboard-container">
               <div className="dashboard-header">
                 <Link to="/dashboard" className="back-link" data-testid="back-to-dashboard">
-                  ← Back to Dashboard
+                  ← डैशबोर्ड / Dashboard
                 </Link>
-                <h1 className="dashboard-title">Customer Management</h1>
+                <h1 className="dashboard-title">ग्राहक प्रबंधन / Customer Management</h1>
               </div>
               <CustomerManagement />
             </div>
@@ -992,9 +992,9 @@ function App() {
             <div className="dashboard-container">
               <div className="dashboard-header">
                 <Link to="/dashboard" className="back-link" data-testid="back-to-dashboard">
-                  ← Back to Dashboard
+                  ← डैशबोर्ड / Dashboard
                 </Link>
-                <h1 className="dashboard-title">Product Catalog</h1>
+                <h1 className="dashboard-title">सामान सूची / Product Catalog</h1>
               </div>
               <ProductCatalog />
             </div>
