@@ -1415,14 +1415,18 @@ h1, h2, h3 {
   background: #f5f7fa;
   max-width: 800px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .help-card {
   background: white;
-  padding: 3rem;
+  padding: 3rem 2rem;
   border-radius: 16px;
   text-align: center;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .help-card svg {
@@ -1435,19 +1439,24 @@ h1, h2, h3 {
   font-weight: 700;
   color: #00897b;
   margin-bottom: 1.5rem;
+  text-align: center;
+  width: 100%;
 }
 
 .help-text {
-  font-size: 1.1rem;
-  line-height: 1.8;
+  font-size: 1.15rem;
+  line-height: 1.9;
   color: #666;
+  text-align: center;
+  max-width: 600px;
 }
 
 .help-text strong {
   color: #00897b;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   display: block;
   margin: 1rem 0;
+  text-align: center;
 }
 
 /* Help Banner on Dashboard */
