@@ -101,19 +101,18 @@ const Home = () => {
       </div>
 
       {/* Help Section */}
-      <div className="help-section">
-        <div className="help-card">
-          <HelpCircle size={48} />
-          <h3>मदद चाहिए?</h3>
-          <p className="help-text">
-            WhatsApp पर आवाज भेजने के लिए:
-          </p>
-          <p className="help-number">+1 415 523 8886</p>
-          <p className="help-instructions">
-            पहले "join" लिखकर भेजें
-            <br />
-            फिर आवाज भेजें
-          </p>
+      <div className="help-section-full">
+        <h2 className="section-title">मदद चाहिए?</h2>
+        <p className="section-title-en">Need Help?</p>
+        
+        <div className="help-grid">
+          <div className="help-feature-card">
+            <HelpCircle size={48} />
+            <h3>WhatsApp नंबर</h3>
+            <div className="help-number">+1 415 523 8886</div>
+            <p>पहले "join" लिखकर भेजें</p>
+            <p>फिर आवाज भेजें</p>
+          </div>
         </div>
       </div>
     </div>
