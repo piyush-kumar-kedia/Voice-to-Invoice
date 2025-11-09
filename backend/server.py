@@ -374,7 +374,7 @@ async def extract_invoice_data(transcription: str, user_id: str):
         chat = LlmChat(
             api_key=EMERGENT_LLM_KEY,
             session_id=f"invoice_{user_id}_{datetime.now().timestamp()}",
-            system_message=f"""You are an invoice extraction assistant. Extract billing information from voice transcriptions.
+            system_message=f"""You are an invoice extraction assistant. Extract billing information from voice transcriptions that may have speech recognition errors.
             
 {catalog_info}{customer_info}
 
@@ -386,12 +386,21 @@ IMPORTANT: Return a JSON object with:
   ]
 }}
 
+CRITICAL RULES FOR HANDLING SPEECH ERRORS:
+1. Voice transcriptions may have errors. Be flexible with similar-sounding words:
+   - "rise" could be "rice"
+   - "should" could be "sold"
+   - "to/two/too" are often confused
+   - Numbers: "to/two", "for/four", "ate/eight"
+2. Match items to available products even if spelling is slightly off
+3. Look for context clues (quantities, prices, customer names)
+
 CRITICAL RULES FOR CUSTOMER NAME:
 1. Look for patterns: "to <name>", "for <name>", "sold to <name>", "customer <name>"
 2. Extract the EXACT name mentioned in transcription (even if misspelled)
 3. Examples:
    - "sold 20 rice to piyush" → customer_name: "piyush"
-   - "sold 20 rice and five almond to peyush" → customer_name: "peyush"
+   - "Should rise to ram" → customer_name: "ram" (recognize "Should" as "sold", "rise" as "rice")
    - "for Rajesh" → customer_name: "Rajesh"
    - "sold 20 rice" → customer_name: "Walk-in Customer"
 
@@ -399,12 +408,15 @@ CRITICAL RULES FOR ITEMS & PRICES:
 1. **ALWAYS set price to null** for items that might be in the catalog
 2. **ONLY include a price number** if the user explicitly mentions a price in the transcription
 3. Normalize to singular form (e.g., "rices" → "rice", "bags of rice" → "rice")
-4. Extract accurate quantities
+4. Extract quantities even if the number sounds like a word ("to" = 2, "for" = 4, "ate" = 8)
+5. Use product catalog to match similar-sounding words
 
 DO NOT guess prices. Set price to null if not explicitly mentioned.
 
 Examples:
 - "sold 2 rice to Rajesh Kumar" → {{"customer_name": "Rajesh Kumar", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}}
+- "Should rise to ram" → {{"customer_name": "ram", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}} (recognize "Should" = "sold", "rise" = "rice")
+- "to rices for piyush" → {{"customer_name": "piyush", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}} (recognize "to" = 2)
 - "sold 20 rice to piyush" → {{"customer_name": "piyush", "items": [{{"name": "rice", "quantity": 20, "price": null}}]}}
 - "sold 2 rice" → {{"customer_name": "Walk-in Customer", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}}
 - "two rices for Amit" → {{"customer_name": "Amit", "items": [{{"name": "rice", "quantity": 2, "price": null}}]}}
