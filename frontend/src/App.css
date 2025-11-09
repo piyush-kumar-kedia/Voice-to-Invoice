@@ -1268,9 +1268,9 @@ h1, h2, h3 {
 
 .step-card {
   background: white;
-  padding: 2.5rem 2rem;
+  padding: 3rem 2rem;
   border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: relative;
   transition: all 0.3s ease;
@@ -1278,52 +1278,55 @@ h1, h2, h3 {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 350px;
+  min-height: 400px;
+  width: 100%;
+  max-width: 350px;
 }
 
 .step-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 32px rgba(0, 137, 123, 0.2);
 }
 
 .step-number {
   position: absolute;
-  top: -20px;
+  top: -25px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #00897b, #00695c);
   color: white;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 137, 123, 0.4);
 }
 
 .step-icon {
   color: #00897b;
-  margin: 2rem 0 1.5rem;
+  margin: 2.5rem auto 1.5rem;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .step-title {
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #333;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #00897b;
   text-align: center;
   width: 100%;
 }
 
 .step-description {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: #666;
+  font-size: 1.1rem;
+  line-height: 2;
+  color: #555;
   text-align: center;
   width: 100%;
   max-width: 100%;
@@ -1336,14 +1339,15 @@ h1, h2, h3 {
 }
 
 .step-description em {
-  background: #f0f9f8;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #f0f9f8, #e0f2f1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   font-style: normal;
-  color: #00897b;
+  color: #00695c;
   font-weight: 600;
   display: inline-block;
-  margin: 0.25rem 0;
+  margin: 0.5rem 0;
+  border: 1px solid #b2dfdb;
 }
 
 /* Features Section */
