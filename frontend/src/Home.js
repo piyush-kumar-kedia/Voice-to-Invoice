@@ -29,57 +29,36 @@ const Home = () => {
 
       {/* How It Works Section */}
       <div className="how-it-works">
-        <h2 className="section-title">
-          कैसे काम करता है?
-        </h2>
+        <h2 className="section-title">कैसे काम करता है?</h2>
         <p className="section-title-en">How It Works</p>
         
-        <div className="steps-grid">
-          <div className="step-card">
-            <div className="step-number">1</div>
-            <div className="step-icon">
-              <Phone size={40} />
-            </div>
-            <h3 className="step-title">आवाज भेजें</h3>
-            <p className="step-description">
-              WhatsApp पर आवाज में बोलें:
-              <br />
-              <em>"राम को 2 चावल बेचा"</em>
-              <br />
-              या
-              <br />
-              <em>"sold 2 rice to ram"</em>
-            </p>
+        <div className="steps-grid-full">
+          <div className="step-feature-card">
+            <div className="step-number-badge">1</div>
+            <Phone size={48} />
+            <h3>आवाज भेजें</h3>
+            <p>WhatsApp पर आवाज में बोलें:</p>
+            <div className="example-box">"राम को 2 चावल बेचा"</div>
+            <p className="or-text">या</p>
+            <div className="example-box">"sold 2 rice to ram"</div>
           </div>
 
-          <div className="step-card">
-            <div className="step-number">2</div>
-            <div className="step-icon">
-              <Receipt size={40} />
-            </div>
-            <h3 className="step-title">बिल बनेगा</h3>
-            <p className="step-description">
-              अपने आप बिल बन जाएगा
-              <br />
-              ग्राहक का नाम, सामान, दाम
-              <br />
-              सब लिख जाएगा
-            </p>
+          <div className="step-feature-card">
+            <div className="step-number-badge">2</div>
+            <Receipt size={48} />
+            <h3>बिल बनेगा</h3>
+            <p>अपने आप बिल बन जाएगा</p>
+            <p>ग्राहक का नाम, सामान, दाम</p>
+            <p>सब लिख जाएगा</p>
           </div>
 
-          <div className="step-card">
-            <div className="step-number">3</div>
-            <div className="step-icon">
-              <Mail size={40} />
-            </div>
-            <h3 className="step-title">ईमेल मिलेगा</h3>
-            <p className="step-description">
-              ग्राहक को बिल की PDF
-              <br />
-              ईमेल से भेज दी जाएगी
-              <br />
-              पेमेंट लिंक भी रहेगा
-            </p>
+          <div className="step-feature-card">
+            <div className="step-number-badge">3</div>
+            <Mail size={48} />
+            <h3>ईमेल मिलेगा</h3>
+            <p>ग्राहक को बिल की PDF</p>
+            <p>ईमेल से भेज दी जाएगी</p>
+            <p>पेमेंट लिंक भी रहेगा</p>
           </div>
         </div>
       </div>
