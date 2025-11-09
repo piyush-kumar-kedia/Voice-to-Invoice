@@ -1232,18 +1232,19 @@ h1, h2, h3 {
 /* How It Works Section */
 .how-it-works {
   padding: 4rem 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   text-align: center;
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin: 0 auto 0.5rem;
   color: #00897b;
   line-height: 1.2;
+  display: block;
 }
 
 .section-title-en {
@@ -1251,15 +1252,18 @@ h1, h2, h3 {
   font-size: 1.5rem;
   font-weight: 400;
   color: #666;
-  margin-top: 0.5rem;
+  margin: 0.5rem auto 3rem;
   text-align: center;
 }
 
 .steps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  margin: 0 auto;
+  max-width: 1200px;
+  justify-items: center;
+  align-items: stretch;
 }
 
 .step-card {
