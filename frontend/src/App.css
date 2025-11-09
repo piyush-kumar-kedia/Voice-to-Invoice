@@ -1537,32 +1537,37 @@ h1, h2, h3 {
   }
   
   .section-title {
-    font-size: 1.75rem;
+    font-size: 1.85rem;
     text-align: center;
   }
   
   .section-title-en {
     font-size: 1.15rem;
     text-align: center;
+    margin-bottom: 2rem;
   }
   
   .steps-grid {
     grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 0 1rem;
   }
   
   .step-card {
     min-height: auto;
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem;
     text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
   }
   
   .step-title {
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     text-align: center;
   }
   
   .step-description {
-    font-size: 1rem;
+    font-size: 1.05rem;
     text-align: center;
   }
   
@@ -1590,18 +1595,28 @@ h1, h2, h3 {
     text-align: center;
   }
   
+  .help-card {
+    padding: 2.5rem 1.5rem;
+  }
+  
   .help-card h3 {
-    font-size: 1.75rem;
+    font-size: 1.85rem;
     text-align: center;
   }
   
   .help-text {
-    font-size: 1rem;
+    font-size: 1.05rem;
     text-align: center;
   }
   
-  .help-text strong {
-    font-size: 1.35rem;
+  .help-number {
+    font-size: 1.65rem;
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .help-instructions {
+    font-size: 1rem;
     text-align: center;
   }
 }
